@@ -6,12 +6,12 @@ const initialState: UserTableSchema = {
     isLoading: false,
     error: undefined,
     usersData: {
-        page: 0,
+        page: 1,
         per_page: 0,
         total: 0,
         total_pages: 0,
         data: undefined,
-    }
+    },
 }
 
 export const UsersSlice = createSlice({

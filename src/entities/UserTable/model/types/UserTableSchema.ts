@@ -1,3 +1,4 @@
+
 export interface UserSchema {
     id?: number;
     email?: string;
@@ -18,4 +19,3 @@ export interface UserTableSchema {
     error?: string;
     usersData?: UsersData;
 }
-

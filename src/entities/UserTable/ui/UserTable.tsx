@@ -10,7 +10,7 @@ import { Loader } from "../../../shared/ui/Loader/Loader";
 export const UserTable = () => {
 
     useEffect(() => {
-        dispatch(fetchUsers());
+        dispatch(fetchUsers(1));
     }, []);
 
     const dispatch = useAppDispatch();
@@ -45,9 +45,23 @@ export const UserTable = () => {
         },
     ]
 
+    const pagination = {
+        current: 0,
+        pageSize: 3,
+        total: 10,
+        onChange: (page: number) => {
+            dispatch(fetchUsers(page));
+        }
+    }
+
     return (
         <div>
-            <Table dataSource={users} columns={columns}/>
+            <Table 
+                dataSource={users} 
+                columns={columns}  
+                pagination={pagination} 
+                size="small"
+            />
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import { configureStore, ReducersMapObject } from "@reduxjs/toolkit";
 import { StateSchema } from "./StateSchema";
-import { UserTableReducer } from "../../../entities/UserTable/model/slice/Users";
+import { UserTableReducer } from "../../../entities/UserTable/model/slice/UsersSlice";
 
 
 export function createReduxStore(initialState?: StateSchema){

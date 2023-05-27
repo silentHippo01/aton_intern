@@ -2,17 +2,18 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { UsersData } from "../types/UserTableSchema";
 
 
-export const fetchUsers = createAsyncThunk<UsersData>(
+export const fetchUsers = createAsyncThunk<UsersData, number>(
     'users/fetchUsers',
-    async () => {
+    async (page, thunkAPI) => {
         try{
-            const response = await fetch('https://reqres.in/api/users');
-            const data = response.json();
+            const data = await fetch(`https://reqres.in/api/users?page=${page}&per_page=3`).then(res => res.json());
+            // const data = response.json();
 
             // if(!data){
             //     throw new Error();
             // }
-
+            console.log(data);
+            
             return data;
         } catch(err) {
             console.log(err);

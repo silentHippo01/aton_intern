@@ -1,23 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { UserData } from "../types/UserData";
 
 
-export interface ILoginToken {
-    token: string;
+export interface ILogin {
+    username: string;
+    email: string;
+    password: string;
 }
 
-export const login = createAsyncThunk<ILoginToken, UserData>(
+export const login = createAsyncThunk<any, ILogin>(
     'login',
-    async (thunkAPI, userData) => {
+    async (authData) => {
         try {
-            // const response = await fetch('https://reqres.in/api/login', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(userData),
-            //   });
+            const response = await fetch('http://localhost:8000/login', {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(authData),
+            })
+            .then(res => res.json())
+            .then(data => console.log(data));
 
-            //   return response;
-            return null;
+            console.log(response);
+            return response;
         } catch (e){
             console.log(e);
         }

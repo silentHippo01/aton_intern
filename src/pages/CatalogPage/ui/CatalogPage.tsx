@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { catalogAction } from "../../../entities/Product/model/productSlice";
 import { getCatatlog } from "../../../entities/Product/selectors/getCatatlog";
 import { ProductCard } from "../../../entities/Product";
+import { getIsAuth } from "../../../features/LoginForm";
 
 class Product {
     title: string;
@@ -27,12 +28,12 @@ class Product {
 
 export const CatalogPage = () => {
 
-    // const [catalogDATA, setCatalogData] = useState<Product[]>([])
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [form] = Form.useForm();
 
     const dispatch = useAppDispatch();
     const catalog = useSelector(getCatatlog);
+    const isAuth = useSelector(getIsAuth);
     console.log(catalog);
 
 
@@ -41,17 +42,8 @@ export const CatalogPage = () => {
         setModalIsOpen(false);
         form.resetFields();
 
-        // setCatalogData([...catalogDATA, {...value}]);
-
         dispatch(catalogAction.addProduct(product))
     }
-
-    // const createProduct = (title: string, category: string, cost: string) => {
-    //     let newProduct = new Product(title, category, cost);
-    //     setCatalogData([...catalogDATA, newProduct]);
-    //     console.log(catalogDATA);
-    // }
-
     return (
         <>
             <div>
@@ -108,7 +100,7 @@ export const CatalogPage = () => {
 
                 <Button
                     type="primary"
-                    disabled={false}
+                    disabled={!isAuth ? true : false}
                     onClick={() => setModalIsOpen(true)}
                 >
                     Добавить

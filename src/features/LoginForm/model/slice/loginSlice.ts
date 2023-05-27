@@ -7,6 +7,7 @@ const initialState: LoginSchema = {
     username: '',
     email: '',
     password: '',
+    isAuth: false,
     isLoading: false,
 }
 
@@ -22,6 +23,7 @@ export const loginSlice = createSlice({
         })
         builder.addCase(login.fulfilled, (state) => {
             state.isLoading = false;
+            state.isAuth = true;
         })
         builder.addCase(login.rejected, (state, action ) => {
             state.isLoading = false;

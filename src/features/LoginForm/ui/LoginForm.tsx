@@ -2,14 +2,18 @@ import { Button, Form, Input } from "antd";
 import { UserData } from "../model/types/UserData";
 import { useAppDispatch } from "../../../shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { login } from "../model/services/login";
+import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { getIsLoading } from "../model/selectors/getIsLoading/getIsLoading";
 
 export const LoginForm = () => {
     const dispatch = useAppDispatch();
+    const isLoading = useSelector(getIsLoading);
 
-    const onFinish = (values: UserData) => {
+    const onFinish = useCallback((values: UserData) => {
         dispatch(login(values))
         console.log('Success:', values);
-      };
+    }, []);
 
     return (
         <Form 
@@ -49,7 +53,11 @@ export const LoginForm = () => {
             </Form.Item>
 
             <Form.Item>
-                <Button type={"primary"} htmlType="submit">
+                <Button 
+                    type={"primary"}
+                    htmlType="submit"
+                    disabled={isLoading ? true : false}
+                >
                     Войти
                 </Button>
             </Form.Item>

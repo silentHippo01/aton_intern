@@ -12,7 +12,6 @@ export const SignUpForm = () => {
                     message: 'Введите свой ник'
                 }]}
             >
-
                 <Input />
             </Form.Item>
 
@@ -42,7 +41,7 @@ export const SignUpForm = () => {
 
             <Form.Item>
                 <Button type={"primary"} htmlType="submit">
-                    Войти
+                    Зарегистрироваться
                 </Button>
             </Form.Item>
         </Form>

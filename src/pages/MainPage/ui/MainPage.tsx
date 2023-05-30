@@ -1,9 +1,9 @@
 import { UserTable } from "../../../entities/UserTable";
-import { Loader } from "../../../shared/ui/Loader/Loader";
+import cls from './MainPage.module.scss';
 
 export const MainPage = () => {
     return (
-        <div>
+        <div className={cls.mainPage}>
             <UserTable />
         </div>
     );

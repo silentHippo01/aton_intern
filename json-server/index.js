@@ -39,6 +39,23 @@ server.post('/login', (req, res) => {
     }
 });
 
+// Эндпоинт для регистрации
+server.post('/signup', (req, res) => {
+    try {
+        const { email, password, username } = req.body;
+
+        const db = JSON.parse(fs.readFileSync(path.resolve(__dirname,  'db.json'), 'UTF-8'));
+        const { users = [] } = db;
+
+        users.push({ email, password, username });
+        fs.writeFileSync('./json-server/db.json', JSON.stringify({...db, users: users}));
+        res.json({ email });
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({ message: e.message });
+    }
+});
+
 // проверяем, авторизован ли пользователь
 // eslint-disable-next-line
 server.use((req, res, next) => {

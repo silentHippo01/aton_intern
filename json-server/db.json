@@ -1,9 +1,1 @@
-{
-    "users": [
-      {
-        "username": "admin",
-        "password": "123",
-        "email": "andrey2002novikov@gmail.com"
-      }
-    ]   
-}
+{"users":[{"username":"admin","password":"123","email":"andrey2002novikov@gmail.com"},{"email":"test","password":"ebtgvfdc","username":"test"},{"email":"tgtggt","password":"tggtgt","username":"tgtgtg"},{"email":"tgtggt","password":"tggtgt","username":"tgtgtg"}]}

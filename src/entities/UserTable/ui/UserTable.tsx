@@ -3,9 +3,11 @@ import { useAppDispatch } from "../../../shared/lib/hooks/useAppDispatch/useAppD
 import { fetchUsers } from "../model/services/fetchUsers";
 import { useSelector } from "react-redux";
 import { getUsers } from "../model/selectors/getUsers/getUsers";
-import { Table } from "antd";
+import { Col, Row, Table } from "antd";
 import { getUsersIsLoading } from "../model/selectors/getUsersIsLoading/getUsersIsLoading";
 import { Loader } from "../../../shared/ui/Loader/Loader";
+import cls from './UserTable.module.scss';
+import { getPage } from "../model/selectors/getPage/getPage";
 
 export const UserTable = () => {
 
@@ -16,9 +18,10 @@ export const UserTable = () => {
     const dispatch = useAppDispatch();
 
     const users = useSelector(getUsers);
+    const currentPage = useSelector(getPage);
     const isLoading = useSelector(getUsersIsLoading);
 
-    if(isLoading){
+    if (isLoading) {
         return <Loader />
     }
 
@@ -45,23 +48,26 @@ export const UserTable = () => {
         },
     ]
 
-    const pagination = {
-        current: 0,
-        pageSize: 3,
-        total: 10,
-        onChange: (page: number) => {
-            dispatch(fetchUsers(page));
-        }
-    }
+    const dataSource = users.map(item => ({...item, key:item.id}));
 
     return (
-        <div>
-            <Table 
-                dataSource={users} 
-                columns={columns}  
-                pagination={pagination} 
-                size="small"
-            />
+        <div className={cls.useTable}>
+            <Row>
+                <Col xs={24} md={{span: 12, offset: 6}}>
+                    <Table
+                        dataSource={dataSource}
+                        columns={columns}
+                        pagination={{
+                            current: currentPage,
+                            pageSize: 3,
+                            total: 10,
+                            onChange: (page: number) => {
+                                dispatch(fetchUsers(page));
+                            }
+                        }}
+                    />
+                </Col>
+            </Row>
         </div>
     );
 };

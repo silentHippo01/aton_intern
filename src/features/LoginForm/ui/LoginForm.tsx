@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 import { getIsLoading } from "../model/selectors/getIsLoading/getIsLoading";
 
 export const LoginForm = () => {
+
+    const [form] = Form.useForm();
     const dispatch = useAppDispatch();
     const isLoading = useSelector(getIsLoading);
 
     const onFinish = useCallback((values: UserData) => {
         dispatch(login(values))
-        console.log('Success:', values);
+        form.resetFields();
     }, []);
 
     return (
@@ -24,7 +26,7 @@ export const LoginForm = () => {
                 name="username"
                 rules={[{
                     required: true,
-                    message: 'Введи свое имя'
+                    message: 'Введите имя'
                 }]}
             >
                 <Input />
@@ -35,7 +37,7 @@ export const LoginForm = () => {
                 name="email"
                 rules={[{
                     required: true,
-                    message: 'Введи свое ник'
+                    message: 'Введите почту'
                 }]}
             >
                 <Input />
@@ -46,7 +48,7 @@ export const LoginForm = () => {
                 name="password"
                 rules={[{
                     required: true,
-                    message: 'Введи свое пароль'
+                    message: 'Введите пароль'
                 }]}
             >
                 <Input />

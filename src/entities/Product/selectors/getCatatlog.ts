@@ -1,3 +1,3 @@
 import { StateSchema } from "../../../app/StoreProvider";
 
-export const getCatatlog = (state: StateSchema) => state.catalog;
+export const getCatalog = (state: StateSchema) => state.catalog.catalog;

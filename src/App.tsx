@@ -17,7 +17,6 @@ export const App: FC<AppProps> = () => {
                 <Navbar />
             </Header>
             
-
             <Routes>
                 <Route path='/' element={<MainPage />} />
                 <Route path='/catalog' element={<CatalogPage />} />

@@ -4,27 +4,10 @@ import { useAppDispatch } from "../../../shared/lib/hooks/useAppDispatch/useAppD
 import { IProduct } from "../../../entities/Product/model/types/CatalogSchema";
 import { useSelector } from "react-redux";
 import { catalogAction } from "../../../entities/Product/model/productSlice";
-import { getCatatlog } from "../../../entities/Product/selectors/getCatatlog";
+import { getCatalog } from "../../../entities/Product/selectors/getCatatlog";
 import { ProductCard } from "../../../entities/Product";
 import { getIsAuth } from "../../../features/LoginForm";
-
-class Product {
-    title: string;
-    category: string;
-    cost: string;
-
-    constructor(title: string, category: string, cost: string) {
-        this.title = title;
-        this.category = category;
-        this.cost = cost;
-    }
-
-    edit(newTitle?: string, newCategory?: string, newCost?: string) {
-        this.title = newTitle;
-        this.category = newCategory;
-        this.cost = newCost;
-    }
-}
+import cls from './CatalogPage.module.scss';
 
 export const CatalogPage = () => {
 
@@ -32,21 +15,23 @@ export const CatalogPage = () => {
     const [form] = Form.useForm();
 
     const dispatch = useAppDispatch();
-    const catalog = useSelector(getCatatlog);
+    const catalog = useSelector(getCatalog);
     const isAuth = useSelector(getIsAuth);
-    console.log(catalog);
-
 
     const onFinish = (product: IProduct) => {
-        console.log(product);
+        function generateId() {
+            return Math.random().toString(36).substr(2, 9);
+        }
+        const newProduct = { ...product, id: generateId() };
         setModalIsOpen(false);
         form.resetFields();
 
-        dispatch(catalogAction.addProduct(product))
+        dispatch(catalogAction.addProduct(newProduct))
     }
+
     return (
         <>
-            <div>
+            <div className={cls.catalog}>
                 <Modal
                     title={'Создать объект'}
                     centered
@@ -81,7 +66,7 @@ export const CatalogPage = () => {
                         </Form.Item>
                         <Form.Item
                             label="Цена"
-                            name="Cost"
+                            name="cost"
                             rules={[{
                                 required: true,
                                 message: 'Обязательное поле'
@@ -98,17 +83,22 @@ export const CatalogPage = () => {
                     </Form>
                 </Modal>
 
-                <Button
-                    type="primary"
-                    disabled={!isAuth ? true : false}
-                    onClick={() => setModalIsOpen(true)}
-                >
-                    Добавить
-                </Button>
+                <div className={cls.catalog__buttons}>
+                    <Button
+                        type="primary"
+                        disabled={!isAuth ? true : false}
+                        onClick={() => setModalIsOpen(true)}
+                    >
+                        Добавить
+                    </Button>
+                </div>
 
-                {/* {
-                    catalog.map(item => item.title)
-                } */}
+                <div className={cls.catalog__content}>
+                    {
+                        catalog.length === 0 ? 'Авторизуйтесь и добавьте объекты' : catalog.map((item, index) => (<ProductCard dataCard={item} key={index} />))
+                    }
+                </div>
+
             </div>
         </>
     );
